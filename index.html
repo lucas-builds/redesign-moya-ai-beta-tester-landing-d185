@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Moya AI — Beta Tester Program</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Bring AI agents into any window you're working in. Apply to join Moya's private beta.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0F1210;
+    --surface:#171B19;
+    --surface2:#1C2119;
+    --text:#ECEDE9;
+    --muted:#8D958F;
+    --accent:#D9FF5C;
+    --accent2:#5C8A7A;
+    --line:#2A2F2B;
+    --space-1:8px;
+    --space-2:16px;
+    --space-3:24px;
+    --space-4:40px;
+    --space-5:64px;
+    --space-6:96px;
+  }
+  *{box-sizing:border-box;}
+  html{overflow-x:hidden;max-width:100%;}
+  .menu-toggle svg{display:block;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    font-size:17px;
+    line-height:1.6;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;height:auto;display:block;}
+  h1,h2,h3{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    letter-spacing:-0.02em;
+    margin:0;
+    overflow-wrap:anywhere;
+  }
+  a{color:inherit;}
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 var(--space-3);
+  }
+  section{padding:var(--space-6) 0;}
+  section + section{border-top:none;}
+  main{display:block;}
+
+  /* Reveal animation (progressive enhancement) */
+  .reveal{opacity:1;transform:none;}
+  .js .reveal{
+    opacity:0;
+    transform:translateY(18px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  .js .reveal.in{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  /* NAV */
+  header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(15,18,16,0.88);
+    backdrop-filter:none;
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:var(--space-2) var(--space-3);
+    max-width:1180px;
+    margin:0 auto;
+    min-height:64px;
+  }
+  .wordmark{
+    font-family:'Fraunces',serif;
+    font-size:1.3rem;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  .wordmark span{color:var(--accent);}
+  nav.links{
+    display:flex;
+    gap:var(--space-4);
+    align-items:center;
+  }
+  nav.links a{
+    text-decoration:none;
+    color:var(--muted);
+    font-size:0.95rem;
+    font-weight:500;
+    transition:color .2s;
+  }
+  nav.links a:hover{color:var(--text);}
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    background:var(--accent);
+    color:#13160F;
+    font-weight:700;
+    padding:0 22px;
+    min-height:48px;
+    border-radius:8px;
+    text-decoration:none;
+    font-size:0.95rem;
+    border:none;
+    cursor:pointer;
+    white-space:nowrap;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(217,255,92,0.25);}
+  .btn-ghost{
+    background:transparent;
+    color:var(--text);
+    border:1px solid var(--line);
+  }
+  .btn-ghost:hover{border-color:var(--accent2);box-shadow:none;}
+  .menu-toggle{
+    display:none;
+    background:none;
+    border:1px solid var(--line);
+    color:var(--text);
+    width:44px;
+    height:44px;
+    border-radius:8px;
+    font-size:1.2rem;
+    cursor:pointer;
+  }
+
+  /* HERO */
+  .hero{
+    position:relative;
+    padding-top:var(--space-6);
+    overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute;
+    inset:0;
+    z-index:0;
+    opacity:0.35;
+  }
+  .hero-bg img{width:100%;height:100%;object-fit:cover;}
+  .hero-bg::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg, rgba(15,18,16,0.5) 0%, var(--bg) 92%);
+  }
+  .hero-inner{
+    position:relative;
+    z-index:1;
+    display:grid;
+    grid-template-columns:minmax(0,1.1fr) minmax(0,0.9fr);
+    gap:var(--space-5);
+    align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:0.8rem;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--accent2);
+    border:1px solid var(--line);
+    padding:6px 14px;
+    border-radius:999px;
+    margin-bottom:var(--space-3);
+  }
+  .eyebrow::before{
+    content:"";
+    width:7px;height:7px;border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 8px var(--accent);
+  }
+  h1.headline{
+    font-size:clamp(2.4rem, 5.4vw, 4rem);
+    line-height:1.04;
+  }
+  .hero-sub{
+    margin-top:var(--space-3);
+    color:var(--muted);
+    font-size:clamp(1rem,1.6vw,1.2rem);
+    max-width:46ch;
+  }
+  .hero-ctas{
+    margin-top:var(--space-4);
+    display:flex;
+    gap:var(--space-2);
+    flex-wrap:wrap;
+  }
+  .hero-meta{
+    margin-top:var(--space-3);
+    color:var(--muted);
+    font-size:0.85rem;
+    display:flex;
+    gap:10px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .hero-meta .dot{color:var(--accent2);}
+
+  .hero-visual{
+    position:relative;
+    border-radius:16px;
+    overflow:hidden;
+    border:1px solid var(--line);
+    background:var(--surface);
+  }
+  .hero-visual img{
+    width:100%;
+    aspect-ratio:16/9;
+    object-fit:cover;
+  }
+  .hero-card{
+    position:relative;
+    margin-top:-64px;
+    margin-left:var(--space-3);
+    margin-right:var(--space-3);
+    z-index:2;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:var(--space-3);
+    max-width:360px;
+  }
+  .hero-card .tag{
+    font-size:0.75rem;
+    color:var(--accent2);
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    margin-bottom:8px;
+    display:block;
+  }
+  .hero-card p{
+    margin:0 0 10px;
+    font-size:0.92rem;
+    color:var(--text);
+  }
+  .sync-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:0.75rem;
+    color:var(--accent);
+    font-weight:600;
+  }
+  .sync-pill::before{
+    content:"";
+    width:7px;height:7px;border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 6px var(--accent);
+  }
+
+  /* PROOF STRIP */
+  .proof{
+    padding:var(--space-4) 0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .proof p{
+    text-align:center;
+    color:var(--muted);
+    font-size:0.85rem;
+    letter-spacing:0.02em;
+    margin:0;
+  }
+  .logo-row{
+    display:flex;
+    justify-content:center;
+    gap:var(--space-5);
+    margin-top:var(--space-3);
+    flex-wrap:wrap;
+  }
+  .logo-ph{
+    flex:1 1 140px;
+    max-width:160px;
+    min-height:48px;
+    border:1px solid var(--line);
+    border-radius:8px;
+    color:var(--muted);
+    font-size:0.78rem;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--surface);
+  }
+
+  /* HOW IT WORKS */
+  .section-head{
+    max-width:640px;
+    margin-bottom:var(--space-5);
+  }
+  .section-head .kicker{
+    color:var(--accent2);
+    font-weight:600;
+    font-size:0.85rem;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    margin-bottom:var(--space-2);
+    display:block;
+  }
+  .section-head h2{
+    font-size:clamp(1.7rem,3.4vw,2.5rem);
+    line-height:1.15;
+  }
+  .section-head p{
+    color:var(--muted);
+    margin-top:var(--space-2);
+    font-size:1.05rem;
+  }
+
+  .thread{
+    position:relative;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:var(--space-3);
+  }
+  .thread::before{
+    content:"";
+    position:absolute;
+    top:30px;
+    left:4%;
+    right:4%;
+    height:1px;
+    background:linear-gradient(90deg, transparent, var(--accent) 15%, var(--accent) 85%, transparent);
+    opacity:0.6;
+  }
+  .thread-step{
+    position:relative;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:var(--space-3);
+  }
+  .thread-num{
+    width:32px;height:32px;
+    border-radius:50%;
+    background:var(--bg);
+    border:1px solid var(--accent);
+    color:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;
+    font-size:0.85rem;
+    margin-bottom:var(--space-3);
+    position:relative;
+    z-index:1;
+  }
+  .thread-step h3{
+    font-size:1.05rem;
+    margin-bottom:8px;
+    font-weight:600;
+  }
+  .thread-step .app-label{
+    display:inline-block;
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--accent2);
+    font-weight:700;
+    margin-bottom:6px;
+  }
+  .thread-step p{
+    color:var(--muted);
+    font-size:0.92rem;
+    margin:0;
+  }
+
+  /* WHY DIFFERENT */
+  .feature-layout{
+    display:grid;
+    grid-template-columns:minmax(0,0.9fr) minmax(0,1.1fr);
+    gap:var(--space-5);
+    align-items:center;
+  }
+  .feature-img{
+    border-radius:16px;
+    overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .feature-img img{
+    width:100%;
+    aspect-ratio:4/3;
+    object-fit:cover;
+  }
+  .feature-list{
+    display:flex;
+    flex-direction:column;
+    gap:var(--space-4);
+  }
+  .feature-item{
+    border-left:2px solid var(--line);
+    padding-left:var(--space-3);
+    transition:border-color .2s;
+  }
+  .feature-item:hover{border-color:var(--accent);}
+  .feature-item h3{
+    font-size:1.2rem;
+    margin-bottom:8px;
+  }
+  .feature-item p{
+    color:var(--muted);
+    margin:0;
+    font-size:0.96rem;
+  }
+
+  /* BETA PROGRAM */
+  .beta-section{
+    background:var(--surface);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .journey{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:var(--space-3);
+  }
+  .journey-card{
+    background:var(--bg);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:var(--space-3);
+  }
+  .journey-card .num{
+    font-family:'Fraunces',serif;
+    font-size:2rem;
+    color:var(--accent);
+    line-height:1;
+    margin-bottom:var(--space-2);
+  }
+  .journey-card h3{
+    font-size:1rem;
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .journey-card p{
+    color:var(--muted);
+    font-size:0.9rem;
+    margin:0;
+  }
+
+  /* APPLY FORM */
+  .apply-layout{
+    display:grid;
+    grid-template-columns:minmax(0,0.9fr) minmax(0,1.1fr);
+    gap:var(--space-5);
+  }
+  .apply-intro h2{
+    font-size:clamp(1.7rem,3.4vw,2.3rem);
+    margin-bottom:var(--space-2);
+  }
+  .apply-intro p{color:var(--muted);}
+  .seats-box{
+    margin-top:var(--space-4);
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:12px;
+    padding:var(--space-3);
+  }
+  .seats-box .label{
+    font-size:0.75rem;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--muted);
+    margin-bottom:8px;
+    display:block;
+  }
+  .seats-box .value{
+    font-family:'Fraunces',serif;
+    font-size:1.6rem;
+    color:var(--accent);
+  }
+  form.apply-form{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:var(--space-4);
+    display:grid;
+    gap:var(--space-3);
+  }
+  .field{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .field label{
+    font-size:0.85rem;
+    color:var(--muted);
+    font-weight:500;
+  }
+  .field input,
+  .field select,
+  .field textarea{
+    background:var(--bg);
+    border:1px solid var(--line);
+    color:var(--text);
+    border-radius:8px;
+    padding:12px 14px;
+    font-family:'Inter',sans-serif;
+    font-size:0.95rem;
+    min-height:48px;
+  }
+  .field textarea{min-height:100px;resize:vertical;}
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus{
+    outline:2px solid var(--accent);
+    outline-offset:1px;
+  }
+  .row-2{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+    gap:var(--space-3);
+  }
+  .form-foot{
+    color:var(--muted);
+    font-size:0.85rem;
+    margin:0;
+  }
+
+  /* TESTIMONIALS */
+  .quotes{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:var(--space-3);
+  }
+  .quote-card{
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:12px;
+    padding:var(--space-3);
+    min-height:160px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+  }
+  .quote-card .soon{
+    color:var(--accent2);
+    font-size:0.75rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+  }
+  .quote-card p{
+    color:var(--muted);
+    font-size:0.9rem;
+    margin:var(--space-2) 0 0;
+    font-style:italic;
+  }
+
+  /* CLOSING CTA */
+  .closing{
+    text-align:center;
+    background:linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+    border-radius:20px;
+    border:1px solid var(--line);
+    padding:var(--space-6) var(--space-3);
+  }
+  .closing h2{
+    font-size:clamp(1.8rem,4vw,2.6rem);
+    max-width:20ch;
+    margin:0 auto;
+  }
+  .closing p{
+    color:var(--muted);
+    margin-top:var(--space-2);
+    font-size:1.05rem;
+  }
+  .closing .btn{margin-top:var(--space-4);}
+  .closing .fine{
+    display:block;
+    margin-top:var(--space-2);
+    color:var(--muted);
+    font-size:0.85rem;
+  }
+
+  /* FOOTER */
+  footer{
+    border-top:1px solid var(--line);
+    padding:var(--space-5) 0 var(--space-4);
+  }
+  .foot-inner{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:var(--space-3);
+  }
+  .foot-links{
+    display:flex;
+    gap:var(--space-3);
+    flex-wrap:wrap;
+  }
+  .foot-links a{
+    color:var(--muted);
+    text-decoration:none;
+    font-size:0.9rem;
+  }
+  .foot-links a:hover{color:var(--text);}
+  .copyright{
+    color:var(--muted);
+    font-size:0.8rem;
+    width:100%;
+    margin-top:var(--space-3);
+    border-top:1px solid var(--line);
+    padding-top:var(--space-3);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width:980px){
+    .hero-inner{grid-template-columns:1fr;}
+    .hero-card{margin-left:0;margin-right:0;max-width:none;}
+    .feature-layout{grid-template-columns:1fr;}
+    .apply-layout{grid-template-columns:1fr;}
+    .thread{grid-template-columns:repeat(2,1fr);}
+    .thread::before{display:none;}
+    .journey{grid-template-columns:repeat(2,1fr);}
+    .quotes{grid-template-columns:1fr;}
+  }
+  @media (max-width:720px){
+    section{padding:var(--space-5) 0;}
+    nav.links{
+      position:fixed;
+      top:64px;
+      left:0;right:0;
+      background:var(--bg);
+      border-bottom:1px solid var(--line);
+      flex-direction:column;
+      align-items:flex-start;
+      padding:var(--space-3);
+      gap:var(--space-3);
+      display:none;
+    }
+    nav.links.open{display:flex;}
+    nav.links a{font-size:1rem;}
+    .menu-toggle{display:block;}
+    .nav .btn{display:none;}
+    nav.links .btn{display:inline-flex;width:100%;}
+    .thread{grid-template-columns:1fr;}
+    .journey{grid-template-columns:1fr;}
+    .row-2{grid-template-columns:1fr;}
+    .logo-row{gap:var(--space-3);}
+  }
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js');</script>
+
+<header>
+  <div class="nav">
+    <div class="wordmark">moya<span>.</span>ai</div>
+    <nav class="links" id="navLinks">
+      <a href="#how">How it works</a>
+      <a href="#beta">Beta program</a>
+      <a href="#apply" class="btn">Apply for Beta</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="hero-bg">
+      <img src="https://zqetssozqghtnylxaojl.supabase.co/storage/v1/object/public/deliverables/d1855055-c275-4262-ad33-b7d74424ad34/page-background-2-mvr8yojo.jpg" alt="Dark textured abstract background with a faint glowing diagonal line" width="1600" height="900">
+    </div>
+    <div class="wrap">
+      <div class="hero-inner">
+        <div class="reveal">
+          <span class="eyebrow">Private Beta · Limited Seats</span>
+          <h1 class="headline">Bring AI agents into any window you're working in</h1>
+          <p class="hero-sub">Moya overlays on top of your existing apps and keeps context as you move between them — no copy-pasting, no re-explaining, no lost thread.</p>
+          <div class="hero-ctas">
+            <a href="#apply" class="btn"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1v14M1 8h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> Apply to be a Beta Tester →</a>
+            <a href="#how" class="btn btn-ghost">See how it works</a>
+          </div>
+          <div class="hero-meta">
+            <span>Rolling cohort</span><span class="dot">·</span><span>macOS &amp; Windows</span><span class="dot">·</span><span>25 seats per cohort</span>
+          </div>
+        </div>
+        <div class="reveal">
+          <div class="hero-visual">
+            <img src="https://zqetssozqghtnylxaojl.supabase.co/storage/v1/object/public/deliverables/d1855055-c275-4262-ad33-b7d74424ad34/page-hero-0-mvr8ypuf.jpg" alt="Abstract illustration of translucent app windows connected by a glowing thread of continuity" width="1200" height="675">
+          </div>
+          <div class="hero-card">
+            <span class="tag">Context preserved across apps</span>
+            <p><strong>Moya —</strong> continuing your research from the doc you had open. Drafting summary now.</p>
+            <span class="sync-pill">synced across windows</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="proof">
+    <div class="wrap reveal">
+      <p>Backed by early operators from teams who live across a dozen apps a day.</p>
+      <div class="logo-row">
+        <div class="logo-ph">Partner A</div>
+        <div class="logo-ph">Partner B</div>
+        <div class="logo-ph">Partner C</div>
+        <div class="logo-ph">Partner D</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">How Moya Works</span>
+        <h2>One agent, every window, zero lost context</h2>
+        <p>Moya sits above your workflow — not inside a single app. Switch windows freely; Moya remembers what you were doing and why.</p>
+      </div>
+      <div class="thread reveal">
+        <div class="thread-step">
+          <div class="thread-num">1</div>
+          <span class="app-label">Browser</span>
+          <h3>Start in your browser</h3>
+          <p>Ask Moya to research a topic while reading a document — it reads what's on screen, no manual input needed.</p>
+        </div>
+        <div class="thread-step">
+          <div class="thread-num">2</div>
+          <span class="app-label">Editor</span>
+          <h3>Switch to your editor</h3>
+          <p>Open your code editor or doc tool. Moya already knows what you found and keeps drafting with that context intact.</p>
+        </div>
+        <div class="thread-step">
+          <div class="thread-num">3</div>
+          <span class="app-label">Messages</span>
+          <h3>Jump to email or Slack</h3>
+          <p>Summarize and share the output without re-explaining the task — Moya carries the thread with you.</p>
+        </div>
+        <div class="thread-step">
+          <div class="thread-num">4</div>
+          <span class="app-label">Resume tomorrow</span>
+          <h3>Come back later</h3>
+          <p>Reopen your machine tomorrow — Moya recalls the session and lets you resume exactly where you stopped.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">Why It's Different</span>
+        <h2>Built for how people actually multitask</h2>
+      </div>
+      <div class="feature-layout reveal">
+        <div class="feature-img">
+          <img src="https://zqetssozqghtnylxaojl.supabase.co/storage/v1/object/public/deliverables/d1855055-c275-4262-ad33-b7d74424ad34/page-feature-1-mvr8ypw4.jpg" alt="Glowing thread of context passing through layered translucent panels" width="800" height="600" loading="lazy">
+        </div>
+        <div class="feature-list">
+          <div class="feature-item">
+            <h3>Works in any app</h3>
+            <p>No plugins per tool. Moya overlays your screen and understands context from whatever window is active.</p>
+          </div>
+          <div class="feature-item">
+            <h3>Persistent memory</h3>
+            <p>Context survives app switches, restarts, and multi-day tasks — so you never have to start explaining from zero.</p>
+          </div>
+          <div class="feature-item">
+            <h3>Invoked instantly</h3>
+            <p>A single shortcut summons Moya wherever you are, keeping you in flow instead of breaking focus to open a new tab.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="beta-section" id="beta">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">Beta Tester Program</span>
+        <h2>Help shape Moya before public launch</h2>
+        <p>We're inviting a small group of early testers to use Moya daily, break things, and tell us what's missing. Direct line to the product team included.</p>
+      </div>
+      <div class="journey reveal">
+        <div class="journey-card">
+          <div class="num">01</div>
+          <h3>Apply in 2 minutes</h3>
+          <p>Tell us your OS, daily tools, and what cross-app workflow slows you down most.</p>
+        </div>
+        <div class="journey-card">
+          <div class="num">02</div>
+          <h3>Get onboarded personally</h3>
+          <p>Approved testers get a guided setup call and direct Slack/Discord access to the team.</p>
+        </div>
+        <div class="journey-card">
+          <div class="num">03</div>
+          <h3>Use Moya daily, give feedback</h3>
+          <p>Weekly short surveys + optional calls. Your input directly shapes the roadmap.</p>
+        </div>
+        <div class="journey-card">
+          <div class="num">04</div>
+          <h3>Lock in beta perks</h3>
+          <p>Founding-tester badge, extended free access, and priority on future feature requests.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="apply">
+    <div class="wrap">
+      <div class="apply-layout">
+        <div class="apply-intro reveal">
+          <h2>Apply for the Beta</h2>
+          <p>We review applications weekly. Expect a reply within 5 business days.</p>
+          <div class="seats-box">
+            <span class="label">Seats remaining this cohort</span>
+            <span class="value">12 of 25</span>
+          </div>
+        </div>
+        <form class="apply-form reveal" action="#" method="post">
+          <div class="field">
+            <label for="name">Full name</label>
+            <input id="name" name="name" type="text" required placeholder="Your name">
+          </div>
+          <div class="field">
+            <label for="email">Work email</label>
+            <input id="email" name="email" type="email" required placeholder="you@company.com">
+          </div>
+          <div class="row-2">
+            <div class="field">
+              <label for="os">Operating system</label>
+              <select id="os" name="os">
+                <option>macOS</option>
+                <option>Windows</option>
+                <option>Linux (waitlist)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="workflow-short">Primary daily tool</label>
+              <input id="workflow-short" name="workflow_short" type="text" placeholder="e.g. VS Code, Figma, Gmail">
+            </div>
+          </div>
+          <div class="field">
+            <label for="workflow">What do you want Moya to help with?</label>
+            <textarea id="workflow" name="workflow" placeholder="Describe the cross-app workflow that slows you down"></textarea>
+          </div>
+          <button type="submit" class="btn">Submit Application →</button>
+          <p class="form-foot">We review every application personally and reply within 5 business days.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">Early Feedback</span>
+        <h2>What our first testers are saying</h2>
+      </div>
+      <div class="quotes reveal">
+        <div class="quote-card">
+          <span class="soon">Coming soon</span>
+          <p>This space is reserved for a real, attributed quote from a verified beta tester once feedback is collected.</p>
+        </div>
+        <div class="quote-card">
+          <span class="soon">Coming soon</span>
+          <p>This space is reserved for a real, attributed quote from a verified beta tester once feedback is collected.</p>
+        </div>
+        <div class="quote-card">
+          <span class="soon">Coming soon</span>
+          <p>This space is reserved for a real, attributed quote from a verified beta tester once feedback is collected.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="closing reveal">
+        <h2>Ready to test the future of cross-app AI?</h2>
+        <p>Seats are limited to keep feedback loops tight. Apply now and hear back within a week.</p>
+        <a href="#apply" class="btn">Apply to be a Beta Tester →</a>
+        <span class="fine">No credit card · Free during beta</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="wordmark">moya<span>.</span>ai</div>
+    <div class="foot-links">
+      <a href="#how">How it works</a>
+      <a href="#beta">Beta program</a>
+      <a href="#">Privacy</a>
+    </div>
+    <p class="copyright">© 2024 Moya AI, Inc. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var toggle = document.getElementById('menuToggle');
+    var links = document.getElementById('navLinks');
+    if(toggle){
+      toggle.addEventListener('click', function(){
+        var open = links.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open);
+      });
+      links.querySelectorAll('a').forEach(function(a){
+        a.addEventListener('click', function(){
+          links.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+
+    if('IntersectionObserver' in window){
+      var items = document.querySelectorAll('.reveal');
+      var obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){
+            e.target.classList.add('in');
+            obs.unobserve(e.target);
+          }
+        });
+      }, {threshold:0.12});
+      items.forEach(function(el){ obs.observe(el); });
+    } else {
+      document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+    }
+  })();
+</script>
+</body>
+</html>
