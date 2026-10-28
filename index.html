@@ -134,14 +134,33 @@
   .menu-toggle{
     display:none;
     background:none;
-    border:1px solid var(--line);
+    border:none;
+    padding:0;
     color:var(--text);
     width:44px;
     height:44px;
-    border-radius:8px;
+    border-radius:0;
     font-size:1.2rem;
     cursor:pointer;
+    position:relative;
+    z-index:101;
   }
+  .menu-toggle .bar{
+    position:absolute;
+    left:50%;
+    width:20px;
+    height:2px;
+    background:currentColor;
+    border-radius:2px;
+    transform-origin:center;
+    transition:transform .25s ease, opacity .25s ease, top .25s ease;
+  }
+  .menu-toggle .bar1{top:15px;transform:translateX(-50%);}
+  .menu-toggle .bar2{top:22px;transform:translateX(-50%);}
+  .menu-toggle .bar3{top:29px;transform:translateX(-50%);}
+  .menu-toggle.open .bar1{top:22px;transform:translateX(-50%) rotate(45deg);}
+  .menu-toggle.open .bar2{opacity:0;}
+  .menu-toggle.open .bar3{top:22px;transform:translateX(-50%) rotate(-45deg);}
 
   /* HERO */
   .hero{
@@ -640,25 +659,62 @@
     section{padding:var(--space-5) 0;}
     nav.links{
       position:fixed;
-      top:64px;
+      top:0;
       left:0;right:0;
+      bottom:0;
       background:var(--bg);
-      border-bottom:1px solid var(--line);
+      border-bottom:none;
       flex-direction:column;
-      align-items:flex-start;
-      padding:var(--space-3);
-      gap:var(--space-3);
-      display:none;
+      align-items:stretch;
+      justify-content:flex-start;
+      padding:calc(var(--space-3) + 64px) var(--space-3) var(--space-3);
+      gap:0;
+      display:flex;
+      opacity:0;
+      visibility:hidden;
+      pointer-events:none;
+      transition:opacity .2s ease;
+      z-index:100;
+      overflow-y:auto;
     }
-    nav.links.open{display:flex;}
-    nav.links a{font-size:1rem;}
+    nav.links.open{opacity:1;visibility:visible;pointer-events:auto;}
+    .menu-brand{
+      display:block;
+      position:fixed;
+      top:0;left:0;
+      padding:var(--space-2) var(--space-3);
+      min-height:64px;
+      display:flex;
+      align-items:center;
+      font-family:'Fraunces',serif;
+      font-size:1.3rem;
+      font-weight:600;
+      letter-spacing:-0.01em;
+      opacity:0;
+      visibility:hidden;
+      pointer-events:none;
+      transition:opacity .2s ease;
+      z-index:100;
+    }
+    .menu-brand span{color:var(--accent);}
+    nav.links.open ~ .menu-brand, .menu-brand.open{opacity:1;visibility:visible;}
+    nav.links a{
+      font-size:22px;
+      padding:16px 0;
+      border-bottom:1px solid var(--line);
+      min-height:44px;
+      display:flex;
+      align-items:center;
+      width:100%;
+    }
     .menu-toggle{display:block;}
     .nav .btn{display:none;}
-    nav.links .btn{display:inline-flex;width:100%;}
+    nav.links .btn{display:inline-flex;width:100%;margin-top:auto;border-bottom:none;}
     .thread{grid-template-columns:1fr;}
     .journey{grid-template-columns:1fr;}
     .row-2{grid-template-columns:1fr;}
     .logo-row{gap:var(--space-3);}
+    body.menu-open{overflow:hidden;}
   }
 </style>
 </head>
@@ -668,13 +724,14 @@
 <header>
   <div class="nav">
     <div class="wordmark">moya<span>.</span>ai</div>
+    <span class="menu-brand" id="menuBrand">moya<span>.</span>ai</span>
     <nav class="links" id="navLinks">
       <a href="#how">How it works</a>
       <a href="#beta">Beta program</a>
       <a href="#apply" class="btn">Apply for Beta</a>
     </nav>
     <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    <span class="bar bar1"></span><span class="bar bar2"></span><span class="bar bar3"></span>
   </button>
   </div>
 </header>
@@ -918,16 +975,38 @@
   (function(){
     var toggle = document.getElementById('menuToggle');
     var links = document.getElementById('navLinks');
+    var brand = document.getElementById('menuBrand');
+    function closeMenu(){
+      links.classList.remove('open');
+      toggle.classList.remove('open');
+      if(brand) brand.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('menu-open');
+    }
+    function openMenu(){
+      links.classList.add('open');
+      toggle.classList.add('open');
+      if(brand) brand.classList.add('open');
+      toggle.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('menu-open');
+    }
     if(toggle){
       toggle.addEventListener('click', function(){
-        var open = links.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', open);
+        if(links.classList.contains('open')){
+          closeMenu();
+        } else {
+          openMenu();
+        }
       });
       links.querySelectorAll('a').forEach(function(a){
         a.addEventListener('click', function(){
-          links.classList.remove('open');
-          toggle.setAttribute('aria-expanded', 'false');
+          closeMenu();
         });
+      });
+      document.addEventListener('keydown', function(e){
+        if(e.key === 'Escape' && links.classList.contains('open')){
+          closeMenu();
+        }
       });
     }
 
